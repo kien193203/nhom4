@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "108819399782",
+    "firebase_url": "https://katshop-7ad1e-default-rtdb.firebaseio.com",
+    "project_id": "katshop-7ad1e",
+    "storage_bucket": "katshop-7ad1e.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:108819399782:android:dd7f986b6aba8565bd19a7",
+        "android_client_info": {
+          "package_name": "FA22_PRO1121.poly.nhom4"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "108819399782-rv4s9gt4j2qalmlcl33jtanve3j8igrm.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "FA22_PRO1121.poly.nhom4",
+            "certificate_hash": "fac150bd9dadc344abe04ef951c998eb2234aa71"
+          }
+        },
+        {
+          "client_id": "108819399782-5oo34v9gm68febr4g43jqfvl2sljhhjq.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDcJfNZjfzKDGp4WCCQ1Sol2_Oq06vzR7c"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "108819399782-5oo34v9gm68febr4g43jqfvl2sljhhjq.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

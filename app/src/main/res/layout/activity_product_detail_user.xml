@@ -1,0 +1,305 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ProductDetailActivityUser">
+
+    <ImageView
+        android:id="@+id/image_product"
+        android:layout_width="match_parent"
+        android:layout_height="300dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+    <ImageView
+        android:id="@+id/ic_cart"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
+        app:layout_constraintBottom_toBottomOf="@+id/ic_back"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/ic_back"
+        app:srcCompat="@drawable/ic_cart_black" />
+
+    <TextView
+        android:id="@+id/cart_count"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:background="@drawable/cart_count"
+        android:gravity="center"
+        android:text="1"
+        android:textColor="@color/white"
+        android:textSize="11sp"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="@+id/ic_cart"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="2.5"
+        app:layout_constraintStart_toEndOf="@+id/ic_cart"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.47000003" />
+
+    <ImageView
+        android:id="@+id/ic_back"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/ic_back" />
+    <TextView
+        android:id="@+id/nameProduct_detail"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="16dp"
+        android:fontFamily="@font/bevietnampro_bold"
+        android:text="Diamond Lattice Denim Jeans"
+        android:textColor="#283238"
+        android:textSize="20sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/image_product" />
+
+    <TextView
+        android:id="@+id/priceProduct_detail"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:fontFamily="@font/bevietnampro_regular"
+        android:text="650.000đ"
+        android:textColor="#283238"
+        android:textSize="18sp"
+        app:layout_constraintStart_toStartOf="@+id/nameProduct_detail"
+        app:layout_constraintTop_toBottomOf="@+id/nameProduct_detail" />
+
+    <RatingBar
+        android:id="@+id/rateProduct_detail"
+        style="@android:style/Widget.Material.RatingBar.Indicator"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        app:layout_constraintStart_toStartOf="@+id/priceProduct_detail"
+        app:layout_constraintTop_toBottomOf="@+id/priceProduct_detail" />
+
+
+    <ImageView
+        android:id="@+id/plusBtn"
+        android:layout_width="40dp"
+        android:layout_height="32dp"
+        android:layout_marginEnd="16dp"
+        android:scaleType="fitXY"
+        android:src="@drawable/plus"
+        app:layout_constraintBottom_toBottomOf="@+id/priceProduct_detail"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/priceProduct_detail" />
+
+    <TextView
+        android:id="@+id/quantity"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
+        android:fontFamily="@font/bevietnampro_bold"
+        android:gravity="center"
+        android:text="1"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toBottomOf="@+id/plusBtn"
+        app:layout_constraintEnd_toStartOf="@+id/plusBtn"
+        app:layout_constraintTop_toTopOf="@+id/plusBtn" />
+
+    <ImageView
+        android:id="@+id/minusBtn"
+        android:layout_width="40dp"
+        android:layout_height="32dp"
+        android:layout_marginEnd="16dp"
+        android:scaleType="fitXY"
+        android:src="@drawable/minus"
+        app:layout_constraintBottom_toBottomOf="@+id/quantity"
+        app:layout_constraintEnd_toStartOf="@+id/quantity"
+        app:layout_constraintTop_toTopOf="@+id/quantity" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/container_choose_size_color"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#dddddd"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <Button
+            android:id="@+id/btnAddToCart_dialog"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:background="#283238"
+            android:fontFamily="@font/bevietnampro_bold"
+            android:text="Thêm vào giỏ hàng"
+            android:textColor="@color/white"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/constraintLayout11" />
+
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/constraintLayout10"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:paddingBottom="16dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <Button
+                android:id="@+id/btnBlue"
+                android:layout_width="60dp"
+                android:layout_height="48dp"
+                android:layout_marginStart="16dp"
+                android:background="@drawable/bg_button_size_color"
+                android:fontFamily="@font/bevietnampro_semibold"
+                android:text="Blue"
+                android:textSize="11sp"
+                app:layout_constraintBottom_toBottomOf="@+id/btnGreen"
+                app:layout_constraintStart_toEndOf="@+id/btnGreen"
+                app:layout_constraintTop_toTopOf="@+id/btnGreen"
+                tools:ignore="TouchTargetSizeCheck" />
+
+            <Button
+                android:id="@+id/btnGreen"
+                android:layout_width="60dp"
+                android:layout_height="48dp"
+                android:layout_marginStart="16dp"
+                android:background="@drawable/bg_button_size_color"
+                android:fontFamily="@font/bevietnampro_semibold"
+                android:text="Green"
+                android:textSize="11sp"
+                app:layout_constraintBottom_toBottomOf="@+id/btnRed"
+                app:layout_constraintStart_toEndOf="@+id/btnRed"
+                app:layout_constraintTop_toTopOf="@+id/btnRed"
+                tools:ignore="TouchTargetSizeCheck" />
+
+            <Button
+                android:id="@+id/btnRed"
+                android:layout_width="60dp"
+                android:layout_height="48dp"
+                android:layout_marginStart="16dp"
+                android:background="@drawable/bg_button_size_color"
+                android:fontFamily="@font/bevietnampro_semibold"
+                android:text="Red"
+                android:textSize="11sp"
+                app:layout_constraintBottom_toBottomOf="@+id/btnWhite"
+                app:layout_constraintStart_toEndOf="@+id/btnWhite"
+                app:layout_constraintTop_toTopOf="@+id/btnWhite"
+                tools:ignore="TouchTargetSizeCheck" />
+
+            <Button
+                android:id="@+id/btnWhite"
+                android:layout_width="60dp"
+                android:layout_height="48dp"
+                android:layout_marginStart="16dp"
+                android:background="@drawable/bg_button_size_color"
+                android:fontFamily="@font/bevietnampro_semibold"
+                android:text="White"
+                android:textSize="11sp"
+                app:layout_constraintBottom_toBottomOf="@+id/btnBlack"
+                app:layout_constraintStart_toEndOf="@+id/btnBlack"
+                app:layout_constraintTop_toTopOf="@+id/btnBlack"
+                tools:ignore="TouchTargetSizeCheck" />
+
+            <Button
+                android:id="@+id/btnBlack"
+                android:layout_width="60dp"
+                android:layout_height="48dp"
+                android:layout_marginTop="16dp"
+                android:background="@drawable/bg_button_size_color"
+                android:fontFamily="@font/bevietnampro_semibold"
+                android:text="Black"
+                android:textSize="11sp"
+                app:layout_constraintStart_toStartOf="@+id/textView41"
+                app:layout_constraintTop_toBottomOf="@+id/textView41"
+                tools:ignore="TouchTargetSizeCheck" />
+
+            <TextView
+                android:id="@+id/textView41"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="10dp"
+                android:fontFamily="@font/bevietnampro_semibold"
+                android:text="Color"
+                android:textColor="#283238"
+                android:textSize="16sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/constraintLayout11"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="2dp"
+            android:background="@color/white"
+            android:paddingBottom="16dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/constraintLayout10">
+
+            <Button
+                android:id="@+id/btnL"
+                android:layout_width="60dp"
+                android:layout_height="48dp"
+                android:layout_marginStart="16dp"
+                android:background="@drawable/bg_button_size_color"
+                android:fontFamily="@font/bevietnampro_semibold"
+                android:text="L"
+                android:textSize="11sp"
+                app:layout_constraintBottom_toBottomOf="@+id/btnM"
+                app:layout_constraintStart_toEndOf="@+id/btnM"
+                tools:ignore="TouchTargetSizeCheck,DuplicateClickableBoundsCheck" />
+
+            <Button
+                android:id="@+id/btnM"
+                android:layout_width="60dp"
+                android:layout_height="48dp"
+                android:layout_marginStart="16dp"
+                android:background="@drawable/bg_button_size_color"
+                android:fontFamily="@font/bevietnampro_semibold"
+                android:text="M"
+                android:textSize="11sp"
+                app:layout_constraintBottom_toBottomOf="@+id/btnS"
+                app:layout_constraintStart_toEndOf="@+id/btnS"
+                app:layout_constraintTop_toTopOf="@+id/btnS"
+                tools:ignore="TouchTargetSizeCheck,DuplicateClickableBoundsCheck" />
+
+            <TextView
+                android:id="@+id/textView33"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="10dp"
+                android:fontFamily="@font/bevietnampro_semibold"
+                android:text="Size"
+                android:textColor="#283238"
+                android:textSize="16sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <Button
+                android:id="@+id/btnS"
+                android:layout_width="60dp"
+                android:layout_height="48dp"
+                android:layout_marginTop="12dp"
+                android:background="@drawable/bg_button_size_color"
+                android:fontFamily="@font/bevietnampro_semibold"
+                android:text="S"
+                android:textSize="11sp"
+                app:layout_constraintStart_toStartOf="@+id/textView33"
+                app:layout_constraintTop_toBottomOf="@+id/textView33"
+                tools:ignore="TouchTargetSizeCheck" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
