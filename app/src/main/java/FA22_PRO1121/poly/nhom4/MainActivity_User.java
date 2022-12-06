@@ -43,8 +43,7 @@ public class MainActivity_User extends AppCompatActivity {
     TextView cart_count,name;
     public static List<Order> userOrders;
     boolean check = true;
-    ImageView profile_icon, icon_cart, icon_order, btnSearch;
-    EditText edtSearch;
+    ImageView profile_icon, icon_cart, icon_order;
     int row_index = -1;
     int old_index = -2;
     RecyclerView recyclerview_category_user, recyclerview_product_user;
@@ -140,7 +139,7 @@ public class MainActivity_User extends AppCompatActivity {
                         productReference = FirebaseDatabase.getInstance().getReference("Product");
                     } else {
                         holder.foreground.setBackgroundResource(R.drawable.category_selected_bg);
-                        productReference = FirebaseDatabase.getInstance().getReference("Product").orderByChild("id_Category").equalTo(model.getId());
+                        productReference = FirebaseDatabase.getInstance().getReference("Product").orderByChild("id_Category").equalTo(categoriesAdapter.getRef(position).getKey());
                     }
                     updateRecyclerViewProduct(productReference);
                 });

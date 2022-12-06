@@ -73,7 +73,7 @@ public class StatisticFragment extends Fragment {
                     }
 
                     if (request.getStatus() == 2){
-                        totalOder+=1;
+                        totalOrder_Cancel+=1;
                     }
                 }
                 total_year.setText(decimalFormat.format(totalYear)+"đ");

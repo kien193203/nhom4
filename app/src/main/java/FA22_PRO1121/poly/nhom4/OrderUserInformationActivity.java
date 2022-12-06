@@ -130,17 +130,14 @@ public class OrderUserInformationActivity extends AppCompatActivity {
         delivery_fee.setText(decimalFormat.format(delivery)+"đ");
         total.setText(decimalFormat.format(request.getTotal())+"đ");
 
-        btnSuccess.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Calendar calendar = Calendar.getInstance();
-                Map<String,Object> map = new HashMap<>();
-                map.put("status",4);
-                map.put("dateSuccess",simpleDateFormat.format(calendar.getTime()));
-                map.put("phone_status",request.getPhone()+"_"+4);
+        btnSuccess.setOnClickListener(v -> {
+            Calendar calendar = Calendar.getInstance();
+            Map<String,Object> map = new HashMap<>();
+            map.put("status",4);
+            map.put("dateSuccess",simpleDateFormat.format(calendar.getTime()));
+            map.put("phone_status",request.getPhone()+"_"+4);
 
-                reference.child(name_order).updateChildren(map);
-            }
+            reference.child(name_order).updateChildren(map);
         });
     }
 

@@ -105,7 +105,7 @@ public class AllOrder_Fragment extends Fragment {
     }
 
     private void showUpdateDialog(String key, Request item) {
-        final AlertDialog.Builder aldialog = new AlertDialog.Builder(getActivity());
+        AlertDialog.Builder aldialog = new AlertDialog.Builder(getActivity());
         aldialog.setTitle("Cập nhật đơn hàng");
         aldialog.setMessage("Vui lòng chọn trạng thái");
         List<String> status = new ArrayList<>();
@@ -143,6 +143,7 @@ public class AllOrder_Fragment extends Fragment {
             requestReference.child(key).setValue(item);
         });
         aldialog.setNegativeButton("Cancel", (dialog, which) -> dialog.dismiss());
-        aldialog.show();
+        AlertDialog dialog = aldialog.create();
+        dialog.show();
     }
 }

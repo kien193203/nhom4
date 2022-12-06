@@ -3,12 +3,15 @@ package FA22_PRO1121.poly.nhom4;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -33,6 +36,9 @@ public class OrderInformationActivity extends AppCompatActivity {
     Button btnConfirmOrder;
     Toolbar toolbar;
     Request request;
+    EditText reson_cancel,edt_message;
+    Spinner spinnerStatus;
+    ConstraintLayout layoutReasonCancel;
     RecyclerView recyclerView_Order_detail;
     InfoProductOrderAdapter adapter;
     DecimalFormat decimalFormat = new DecimalFormat("###,###,###");
@@ -45,6 +51,10 @@ public class OrderInformationActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_order_information);
         reference = FirebaseDatabase.getInstance().getReference("Request");
+        edt_message = findViewById(R.id.edt_message);
+        spinnerStatus = findViewById(R.id.spinnerStatus);
+        reson_cancel = findViewById(R.id.reson_cancel);
+        layoutReasonCancel = findViewById(R.id.LayoutReasonCancel);
         dateCreated = findViewById(R.id.dateCreated);
         dateConfirm = findViewById(R.id.dateConfirm);
         dateCanceled = findViewById(R.id.dateCanceled);
@@ -78,6 +88,7 @@ public class OrderInformationActivity extends AppCompatActivity {
 
         dateCreated.setText(request.getDateCreated());
         statusCreated.setText("Chờ xác nhận");
+        edt_message.setText(request.getMassage());
         if (!request.getDateConfirm().equals("")) { // xac nhan don hang
             dateConfirm.setText(request.getDateConfirm());
             statusConfirm.setText("Xác nhận");
@@ -87,7 +98,9 @@ public class OrderInformationActivity extends AppCompatActivity {
 
         if (!request.getDateCanceled().equals("")) { // don hang bi huy
             statusCancel.setText("Đã hủy");
+            layoutReasonCancel.setVisibility(View.VISIBLE);
             dateCanceled.setText(request.getDateCanceled());
+            reson_cancel.setText(request.getCancellation_reason());
             dateCanceled.setVisibility(View.VISIBLE);
             statusCancel.setVisibility(View.VISIBLE);
         }

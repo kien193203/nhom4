@@ -11,6 +11,8 @@ import androidx.viewpager2.widget.ViewPager2;
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
 
+import java.util.Objects;
+
 import FA22_PRO1121.poly.nhom4.Adapter.Order_View_Pager;
 import FA22_PRO1121.poly.nhom4.R;
 
@@ -26,7 +28,7 @@ public class OrderFragment extends Fragment {
         tabLayout = root.findViewById(R.id.tab_order);
         view_pager_order_admin = root.findViewById(R.id.view_pager_order_admin);
         tabLayout.setTabGravity(TabLayout.GRAVITY_CENTER);
-        orderViewPager = new Order_View_Pager(getActivity());
+        orderViewPager = new Order_View_Pager(requireActivity());
         view_pager_order_admin.setAdapter(orderViewPager);
 
         new TabLayoutMediator(tabLayout, view_pager_order_admin, (tab, position) -> {

@@ -125,7 +125,6 @@ public class WaitConfirm_Fragment extends Fragment {
         Spinner spinner = view.findViewById(R.id.statusSpinner);
         spinner.setAdapter(adapter);
         aldialog.setView(view);
-
         aldialog.setPositiveButton("OK", (dialog, which) -> {
             Calendar calendar = Calendar.getInstance();
             dialog.dismiss();

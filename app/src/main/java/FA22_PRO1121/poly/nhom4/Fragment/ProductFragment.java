@@ -20,6 +20,7 @@ import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -68,7 +69,7 @@ public class ProductFragment extends Fragment {
         categoryReference = FirebaseDatabase.getInstance().getReference("Category");
         recyclerView_product = root.findViewById(R.id.recyclerView_product);
         recyclerView_product.setHasFixedSize(true);
-        recyclerView_product.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
+        recyclerView_product.setLayoutManager(new GridLayoutManager(getActivity(), 2));
         fab_add_product = root.findViewById(R.id.fab_add_product);
 
         fab_add_product.setOnClickListener(v -> showDialog(0));
