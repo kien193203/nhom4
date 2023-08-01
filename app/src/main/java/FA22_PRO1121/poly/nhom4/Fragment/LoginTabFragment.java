@@ -1,4 +1,4 @@
-package FA22_PRO1121.poly.nhom4;
+package FA22_PRO1121.poly.nhom4.Fragment;
 
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -22,7 +22,11 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+
+import FA22_PRO1121.poly.nhom4.MainActivity_User;
 import FA22_PRO1121.poly.nhom4.Model.Users;
+import FA22_PRO1121.poly.nhom4.NavigationDrawer;
+import FA22_PRO1121.poly.nhom4.R;
 import FA22_PRO1121.poly.nhom4.Ultils.Common;
 
 public class LoginTabFragment extends Fragment {
@@ -65,7 +69,7 @@ public class LoginTabFragment extends Fragment {
                                 }else {
                                     Toast.makeText(getActivity(), "Đăng nhập thành công", Toast.LENGTH_SHORT).show();
                                     progressDialog.dismiss();
-                                    startActivity(new Intent(getActivity(),MainActivity_User.class));
+                                    startActivity(new Intent(getActivity(), MainActivity_User.class));
                                 }
                                 Common.currentUser = user;
                                 rememberUser(edt_phone.getText().toString(),edt_pass.getText().toString(),chk_remember.isChecked());

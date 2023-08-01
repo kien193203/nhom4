@@ -2,6 +2,7 @@ package FA22_PRO1121.poly.nhom4;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -151,7 +152,7 @@ public class ProductDetailActivityUser extends AppCompatActivity {
                 if (userOrders.size() > 0) { // gio hang khong rong
                     boolean isExist = false;
                     for (int i = 0; i < userOrders.size(); i++) {
-                        if (userOrders.get(i).getProductId() == product.getId()
+                        if (userOrders.get(i).getProductId().equals(product.getId())
                                 && userOrders.get(i).getSize().equals(size)
                                 && userOrders.get(i).getColor().equals(color)) { // đã có sản phẩm này trong giỏ
                             userOrders.get(i).setQuantity(userOrders.get(i).getQuantity() + Integer.parseInt(quantity.getText().toString()));
@@ -242,6 +243,7 @@ public class ProductDetailActivityUser extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
+        userOrders = MainActivity_User.userOrders;
         if (userOrders.size() == 0) {
             cart_count.setVisibility(View.GONE);
         } else {

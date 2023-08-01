@@ -1,4 +1,4 @@
-package FA22_PRO1121.poly.nhom4;
+package FA22_PRO1121.poly.nhom4.Fragment;
 
 import android.app.ProgressDialog;
 import android.os.Bundle;
@@ -20,6 +20,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import FA22_PRO1121.poly.nhom4.Model.Users;
+import FA22_PRO1121.poly.nhom4.R;
 
 public class SignUpTabFragment extends Fragment {
 
@@ -76,6 +77,7 @@ public class SignUpTabFragment extends Fragment {
 
         if (!phone.matches(regex)){
             edt_phone.setError("Số điện thoại của bạn không hợp lệ");
+            return -1;
         }
 
         if (pass.trim().isEmpty()) {

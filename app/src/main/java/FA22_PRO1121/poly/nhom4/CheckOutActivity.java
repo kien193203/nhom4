@@ -153,7 +153,6 @@ public class CheckOutActivity extends AppCompatActivity {
                                 finish();
 
                             });
-                    reference.child(bundle_buy_again.getString("name_order")).removeValue();
                 }
                 // Delete cart
                 if (bundle_buy_again == null) {

@@ -94,6 +94,7 @@ public class MainActivity_User extends AppCompatActivity {
 
                 holder.layout_item_product.setOnClickListener(v -> {
                     Intent i = new Intent(MainActivity_User.this, ProductDetailActivityUser.class);
+                    model.setId(productAdapter.getRef(position).getKey());
                     i.putExtra("object", model);
                     startActivity(i);
                 });

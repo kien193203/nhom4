@@ -118,7 +118,9 @@ public class CustomerFragment extends Fragment {
         } else {
             edt_name_customer.setText(user.getName());
             edt_address_customer.setText(user.getAddress());
+            edt_Pass_customer.setText(user.getPass());
             edt_Pass_customer.setVisibility(View.GONE);
+            edt_phone_customer.setText(user.getPhone());
             edt_phone_customer.setVisibility(View.GONE);
             btn_add_customer.setText("Sửa");
         }
@@ -155,7 +157,7 @@ public class CustomerFragment extends Fragment {
                         Map<String, Object> map = new HashMap<>();
                         map.put("address", edt_address_customer.getText().toString());
                         map.put("name", edt_name_customer.getText().toString());
-                        userDatabase.child(user.getPhone()).updateChildren(map, (error, ref) -> Toast.makeText(getActivity(), "Cập nhập thông tin khách thành công", Toast.LENGTH_SHORT).show());
+                        userDatabase.child(user.getPhone()).updateChildren(map, (error, ref) -> {Toast.makeText(getActivity(), "Cập nhập thông tin khách thành công", Toast.LENGTH_SHORT).show();alertDialog.dismiss();});
                     }
                 }
             }

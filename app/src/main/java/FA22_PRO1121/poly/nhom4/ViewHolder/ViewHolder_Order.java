@@ -11,7 +11,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import FA22_PRO1121.poly.nhom4.Interface.ItemClickListener;
 import FA22_PRO1121.poly.nhom4.R;
 
-public class ViewHolder_Order extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnCreateContextMenuListener {
+public class ViewHolder_Order extends RecyclerView.ViewHolder implements View.OnClickListener {
 
     public TextView name_order, status_order,size_product,color_product,price_product_order,quantity_order,name_product_in_order;
     public ImageView image_product;
@@ -28,16 +28,6 @@ public class ViewHolder_Order extends RecyclerView.ViewHolder implements View.On
         image_product = itemView.findViewById(R.id.image_product);
 
         itemView.setOnClickListener(this);
-
-        itemView.setOnCreateContextMenuListener(this);
-
-    }
-
-
-    @Override
-    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
-        menu.setHeaderTitle("Thay đổi trạng thái hóa đơn");
-        menu.add(0, 0, getAbsoluteAdapterPosition(), "Cập nhật");
     }
 
     @Override

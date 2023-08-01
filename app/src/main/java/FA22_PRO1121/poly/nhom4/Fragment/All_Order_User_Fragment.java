@@ -102,7 +102,6 @@ public class All_Order_User_Fragment extends Fragment {
                     EditText reason = dialog.findViewById(R.id.reason);
                     Button cancel = dialog.findViewById(R.id.btnCancel);
                     Button confirm = dialog.findViewById(R.id.btnOk);
-                    Log.e("key", adapter.getRef(holder.getAbsoluteAdapterPosition()).getKey());
                     cancel.setOnClickListener(v1 -> dialog.dismiss());
                     confirm.setOnClickListener(v12 -> {
                         if (reason.getText().toString().trim().isEmpty()) {
@@ -110,6 +109,7 @@ public class All_Order_User_Fragment extends Fragment {
                         } else {
                             Calendar calendar = Calendar.getInstance();
                             Map<String, Object> map = new HashMap<>();
+                            map.put("cancellation_reason",reason.getText().toString());
                             map.put("dateCanceled", simpleDateFormat.format(calendar.getTime()));
                             map.put("status", 2);
                             map.put("phone_status", model.getPhone() + "_" + 2);

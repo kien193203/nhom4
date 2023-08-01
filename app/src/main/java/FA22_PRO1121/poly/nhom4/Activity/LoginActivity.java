@@ -10,7 +10,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
 
-import FA22_PRO1121.poly.nhom4.LoginAdapter;
+import FA22_PRO1121.poly.nhom4.Adapter.LoginAdapter;
 import FA22_PRO1121.poly.nhom4.R;
 
 public class LoginActivity extends AppCompatActivity {

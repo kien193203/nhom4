@@ -20,6 +20,7 @@ import com.squareup.picasso.Picasso;
 
 import java.text.DecimalFormat;
 
+import FA22_PRO1121.poly.nhom4.CheckOutActivity;
 import FA22_PRO1121.poly.nhom4.Model.Request;
 import FA22_PRO1121.poly.nhom4.OrderUserInformationActivity;
 import FA22_PRO1121.poly.nhom4.R;
@@ -61,6 +62,8 @@ public class Success_Order_User_Fragment extends Fragment {
                 for (int i = 0;i<model.getList().size();i++){
                     quantity_product += model.getList().get(i).getQuantity();
                 }
+                holder.btnCancel_Order.setVisibility(View.GONE);
+                holder.btn_Buy_Again.setVisibility(View.VISIBLE);
                 holder.total_product_order_user.setText(quantity_product + " sản phẩm");
                 holder.total_order.setText(decimalFormat.format(model.getTotal()) + "đ");
                 holder.setItemClickListener((view, position1, isLongClick) -> {
@@ -69,6 +72,18 @@ public class Success_Order_User_Fragment extends Fragment {
                     bundle.putSerializable("request_detail",adapter.getItem(holder.getAbsoluteAdapterPosition()));
                     bundle.putString("name_order",adapter.getRef(position1).getKey());
                     i.putExtra("bundle",bundle);
+                    startActivity(i);
+                });
+
+                int finalQuantity_product = quantity_product;
+                holder.btn_Buy_Again.setOnClickListener(v -> {
+                    Intent i = new Intent(getActivity(), CheckOutActivity.class);
+                    Bundle bundle = new Bundle();
+                    bundle.putSerializable("request_again", model);
+                    bundle.putInt("quantity_again", finalQuantity_product);
+                    bundle.putString("name_order", adapter.getRef(holder.getAbsoluteAdapterPosition()).getKey());
+                    i.putExtra("buy_request_again", bundle);
+
                     startActivity(i);
                 });
             }

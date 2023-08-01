@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".LoginTabFragment">
+    tools:context=".Fragment.LoginTabFragment">
 
     <EditText
         android:id="@+id/edt_phone"
@@ -36,7 +36,7 @@
         android:autofillHints=""
         android:background="@drawable/signup_login_edt_bg"
         android:hint="Password"
-        android:inputType="text"
+        android:inputType="textPassword"
         android:paddingVertical="10dp"
         android:paddingStart="20dp"
         android:paddingEnd="10dp"

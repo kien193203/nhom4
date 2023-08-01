@@ -1,7 +1,9 @@
 package FA22_PRO1121.poly.nhom4;
 
+import android.app.Dialog;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
@@ -20,8 +22,10 @@ import com.google.firebase.database.FirebaseDatabase;
 
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import FA22_PRO1121.poly.nhom4.Adapter.InfoProductOrderAdapter;
@@ -36,7 +40,7 @@ public class OrderInformationActivity extends AppCompatActivity {
     Button btnConfirmOrder;
     Toolbar toolbar;
     Request request;
-    EditText reson_cancel,edt_message;
+    EditText reson_cancel, edt_message;
     Spinner spinnerStatus;
     ConstraintLayout layoutReasonCancel;
     RecyclerView recyclerView_Order_detail;
@@ -86,6 +90,16 @@ public class OrderInformationActivity extends AppCompatActivity {
         }
         toolbar.setNavigationOnClickListener(v -> finish());
 
+        List<String> status = new ArrayList<>();
+        status.add("Chờ xác nhận");
+        status.add("Xác nhận");
+        status.add("Đã hủy");
+        status.add("Đang giao");
+        status.add("Thành công");
+        ArrayAdapter<String> spinnerAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, status);
+        spinnerStatus.setAdapter(spinnerAdapter);
+        spinnerStatus.setSelection(request.getStatus());
+
         dateCreated.setText(request.getDateCreated());
         statusCreated.setText("Chờ xác nhận");
         edt_message.setText(request.getMassage());
@@ -101,8 +115,10 @@ public class OrderInformationActivity extends AppCompatActivity {
             layoutReasonCancel.setVisibility(View.VISIBLE);
             dateCanceled.setText(request.getDateCanceled());
             reson_cancel.setText(request.getCancellation_reason());
+            btnConfirmOrder.setVisibility(View.GONE);
             dateCanceled.setVisibility(View.VISIBLE);
             statusCancel.setVisibility(View.VISIBLE);
+            spinnerStatus.setEnabled(false);
         }
 
         if (!request.getDateDelivery().equals("")) { // don hang đang giao
@@ -121,11 +137,6 @@ public class OrderInformationActivity extends AppCompatActivity {
             dateCanceled.setVisibility(View.GONE);
         }
 
-        if (request.getStatus() == 0) {
-            btnConfirmOrder.setVisibility(View.VISIBLE);
-        } else {
-            btnConfirmOrder.setVisibility(View.GONE);
-        }
         adapter = new InfoProductOrderAdapter(this, request.getList());
         recyclerView_Order_detail.setAdapter(adapter);
 
@@ -143,17 +154,91 @@ public class OrderInformationActivity extends AppCompatActivity {
 
 
         btnConfirmOrder.setOnClickListener(v -> {
-            Calendar calendar = Calendar.getInstance();
-            Map<String, Object> map = new HashMap<>();
-            map.put("dateConfirm", simpleDateFormat.format(calendar.getTime()));
-            map.put("status", 1);
-            map.put("phone_status",request.getPhone()+"_"+1);
-            reference.child(name_order).updateChildren(map)
-                    .addOnSuccessListener(unused -> {
-                        Toast.makeText(OrderInformationActivity.this, "Đơn hàng đã được xác nhận", Toast.LENGTH_SHORT).show();
-                        finish();
-                    })
-                    .addOnFailureListener(e -> Toast.makeText(OrderInformationActivity.this, e.getMessage(), Toast.LENGTH_SHORT).show());
+            if (request.getStatus() == spinnerStatus.getSelectedItemPosition()) {
+                finish();
+                return;
+            } else {
+                Calendar calendar = Calendar.getInstance();
+                request.setStatus(spinnerStatus.getSelectedItemPosition());
+                switch (spinnerStatus.getSelectedItemPosition()) {
+                    case 0:
+                        Map<String, Object> map = new HashMap<>();
+                        map.put("dateCanceled", "");
+                        map.put("dateConfirm", "");
+                        map.put("dateDelivery", "");
+                        map.put("dateSuccess", "");
+                        map.put("status", 0);
+                        map.put("phone_status", request.getPhone() + "_" + 0);
+                        reference.child(name_order).updateChildren(map).addOnSuccessListener(unused -> {
+                            Toast.makeText(OrderInformationActivity.this, "Thay đổi trạng thái đơn hàng thành công", Toast.LENGTH_SHORT).show();
+                            finish();
+                        }).addOnFailureListener(e -> Toast.makeText(OrderInformationActivity.this, e.getMessage(), Toast.LENGTH_SHORT).show());
+                        break;
+                    case 1:
+                        Map<String, Object> map1 = new HashMap<>();
+                        map1.put("dateCanceled", "");
+                        map1.put("dateConfirm", simpleDateFormat.format(calendar.getTime()));
+                        map1.put("dateDelivery", "");
+                        map1.put("dateSuccess", "");
+                        map1.put("status", 1);
+                        map1.put("phone_status", request.getPhone() + "_" + 1);
+                        reference.child(name_order).updateChildren(map1).addOnSuccessListener(unused -> {
+                            Toast.makeText(OrderInformationActivity.this, "Thay đổi trạng thái đơn hàng thành công", Toast.LENGTH_SHORT).show();
+                            finish();
+                        }).addOnFailureListener(e -> Toast.makeText(OrderInformationActivity.this, e.getMessage(), Toast.LENGTH_SHORT).show());
+                        break;
+                    case 2:
+                        Dialog dialog = new Dialog(OrderInformationActivity.this);
+                        dialog.setContentView(R.layout.dialog_cancel_reason);
+                        dialog.show();
+                        EditText reason = dialog.findViewById(R.id.reason);
+                        Button cancel = dialog.findViewById(R.id.btnCancel);
+                        Button confirm = dialog.findViewById(R.id.btnOk);
+                        cancel.setOnClickListener(v1 -> dialog.dismiss());
+                        confirm.setOnClickListener(v12 -> {
+                            if (reason.getText().toString().trim().isEmpty()) {
+                                Toast.makeText(OrderInformationActivity.this, "Vui lòng nhập lý do hủy", Toast.LENGTH_SHORT).show();
+                            } else {
+                                Map<String, Object> map2 = new HashMap<>();
+                                map2.put("dateCanceled", simpleDateFormat.format(calendar.getTime()));
+                                map2.put("status", 2);
+                                map2.put("phone_status", request.getPhone() + "_" + 2);
+                                map2.put("cancellation_reason",reason.getText().toString());
+                                reference.child(name_order).updateChildren(map2)
+                                        .addOnSuccessListener(unused -> {
+                                            Toast.makeText(OrderInformationActivity.this, "Bạn đã hủy đơn hàng thành công", Toast.LENGTH_SHORT).show();
+                                            finish();
+                                        })
+                                        .addOnFailureListener(e -> Toast.makeText(OrderInformationActivity.this, e.getMessage(), Toast.LENGTH_SHORT).show());
+                                dialog.dismiss();
+                            }
+                        });
+                        break;
+                    case 3:
+                        Map<String, Object> map3 = new HashMap<>();
+                        map3.put("dateCanceled", "");
+                        map3.put("dateDelivery", simpleDateFormat.format(calendar.getTime()));
+                        map3.put("dateSuccess", "");
+                        map3.put("status", 3);
+                        map3.put("phone_status", request.getPhone() + "_" + 3);
+                        reference.child(name_order).updateChildren(map3).addOnSuccessListener(unused -> {
+                            Toast.makeText(OrderInformationActivity.this, "Thay đổi trạng thái đơn hàng thành công", Toast.LENGTH_SHORT).show();
+                            finish();
+                        }).addOnFailureListener(e -> Toast.makeText(OrderInformationActivity.this, e.getMessage(), Toast.LENGTH_SHORT).show());
+                        break;
+                    case 4:
+                        Map<String, Object> map4 = new HashMap<>();
+                        map4.put("dateCanceled", "");
+                        map4.put("dateSuccess", simpleDateFormat.format(calendar.getTime()));
+                        map4.put("status", 4);
+                        map4.put("phone_status", request.getPhone() + "_" + 4);
+                        reference.child(name_order).updateChildren(map4).addOnSuccessListener(unused -> {
+                            Toast.makeText(OrderInformationActivity.this, "Thay đổi trạng thái đơn hàng thành công", Toast.LENGTH_SHORT).show();
+                            finish();
+                        }).addOnFailureListener(e -> Toast.makeText(OrderInformationActivity.this, e.getMessage(), Toast.LENGTH_SHORT).show());
+                        break;
+                }
+            }
         });
     }
 

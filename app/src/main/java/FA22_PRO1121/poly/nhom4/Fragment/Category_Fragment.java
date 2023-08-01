@@ -4,11 +4,13 @@ import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.SearchView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -51,6 +53,7 @@ public class Category_Fragment extends Fragment {
     StorageReference storageReference;
     Button btnAddCategory;
     Categories categories;
+    String key_category="";
     FirebaseRecyclerOptions<Categories> optionsCategory;
     FirebaseRecyclerAdapter<Categories, ViewHolder_Category_admin> categoriesAdapter;
 
@@ -90,19 +93,20 @@ public class Category_Fragment extends Fragment {
                 Picasso.get().load(Uri.parse(model.getImage())).into(holder.image_Category);
                 holder.edit.setOnClickListener(v -> {
                     categories = categoriesAdapter.getItem(position);
-                    categories.setId(categoriesAdapter.getRef(position).getKey());
+                    key_category = categoriesAdapter.getRef(position).getKey();
                     selectedImageUri = Uri.parse(categories.getImage());
                     showContainerAdd(1);
                 });
 
                 holder.delete.setOnClickListener(v -> {
-
+                    String key_remove = categoriesAdapter.getRef(position).getKey();
+                    Log.e("a", "onBindViewHolder: " + key_remove);
                     AlertDialog.Builder diBuilder = new AlertDialog.Builder(getActivity());
                     diBuilder.setMessage("Xóa danh mục này sẽ xóa sản phẩm thuộc danh mục bạn có chắc chắn xóa không ?")
                             .setNegativeButton("Không", (dialog, which) -> dialog.dismiss())
-                            .setPositiveButton("Có", (dialog, which) -> categoryReference.child(categoriesAdapter.getRef(holder.getAbsoluteAdapterPosition()).getKey()).removeValue((error, ref) -> {
+                            .setPositiveButton("Có", (dialog, which) -> categoryReference.child(key_remove).removeValue((error, ref) -> {
                                 Toast.makeText(getActivity(), "Xóa danh mục thành công", Toast.LENGTH_SHORT).show();
-                                Query productReference = FirebaseDatabase.getInstance().getReference("Product").orderByChild("id_Category").equalTo(categoriesAdapter.getRef(holder.getAbsoluteAdapterPosition()).getKey());
+                                Query productReference = FirebaseDatabase.getInstance().getReference("Product").orderByChild("id_Category").equalTo(key_remove);
                                 productReference.addListenerForSingleValueEvent(new ValueEventListener() {
                                     @Override
                                     public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -162,14 +166,14 @@ public class Category_Fragment extends Fragment {
                             storageReference.putFile(selectedImageUri).addOnSuccessListener(taskSnapshot -> taskSnapshot.getStorage().getDownloadUrl().addOnCompleteListener(task -> {
                                 categories.setName(name);
                                 categories.setImage(task.getResult().toString());
-                                categoryReference.child(categories.getId()).setValue(categories)
+                                categoryReference.child(key_category).setValue(categories)
                                         .addOnCompleteListener(task1 -> Toast.makeText(getActivity(), "Sửa danh mục thành công", Toast.LENGTH_SHORT).show())
                                         .addOnCanceledListener(() -> Toast.makeText(getActivity(), "Sửa danh mục thất bại", Toast.LENGTH_SHORT).show());
                             }));
                         } else {
                             categories.setName(name);
                             categories.setImage(selectedImageUri.toString());
-                            categoryReference.child(categories.getId()).setValue(categories)
+                            categoryReference.child(key_category).setValue(categories)
                                     .addOnCompleteListener(task1 -> Toast.makeText(getActivity(), "Sửa danh mục thành công", Toast.LENGTH_SHORT).show())
                                     .addOnCanceledListener(() -> Toast.makeText(getActivity(), "Sửa danh mục thất bại", Toast.LENGTH_SHORT).show());
                         }

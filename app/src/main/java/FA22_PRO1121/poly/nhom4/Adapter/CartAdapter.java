@@ -18,6 +18,7 @@ import com.squareup.picasso.Picasso;
 import java.text.DecimalFormat;
 import java.util.List;
 
+import FA22_PRO1121.poly.nhom4.MainActivity_User;
 import FA22_PRO1121.poly.nhom4.Model.Order;
 import FA22_PRO1121.poly.nhom4.R;
 import FA22_PRO1121.poly.nhom4.Ultils.Common;
@@ -70,6 +71,7 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
         DatabaseReference listOrderCart = FirebaseDatabase.getInstance().getReference("Cart").child(Common.currentUser.getPhone());
         listCart.remove(order);
         listOrderCart.setValue(listCart);
+        MainActivity_User.userOrders = listCart;
     }
 
     private void plusCartItem(ViewHolder holder, Order order, int position) {

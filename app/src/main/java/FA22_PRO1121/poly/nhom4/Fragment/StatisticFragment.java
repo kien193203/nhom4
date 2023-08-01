@@ -26,7 +26,7 @@ import FA22_PRO1121.poly.nhom4.R;
 
 public class StatisticFragment extends Fragment {
 
-    TextView total_year,total_customer,total_order,total_orderCancel,total_month;
+    TextView total_year,total_customer,total_order,total_orderCancel,total_month,total_today;
     DatabaseReference requestReference;
     Query userReference;
     DecimalFormat decimalFormat = new DecimalFormat("###,###,###");
@@ -43,7 +43,7 @@ public class StatisticFragment extends Fragment {
         total_order = root.findViewById(R.id.total_order);
         total_orderCancel = root.findViewById(R.id.total_orderCancel);
         total_month = root.findViewById(R.id.total_month);
-
+        total_today = root.findViewById(R.id.totalToday);
         userReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -62,6 +62,7 @@ public class StatisticFragment extends Fragment {
                 long totalOder = snapshot.getChildrenCount();
                 int totalOrder_Cancel = 0;
                 int totalMonth = 0;
+                int totalToday = 0;
                 for (DataSnapshot dataSnapshot: snapshot.getChildren()){
                     Request request = dataSnapshot.getValue(Request.class);
                     if (request.getStatus() == 4){
@@ -70,6 +71,9 @@ public class StatisticFragment extends Fragment {
 
                     if (request.getStatus() ==4 && request.getDateSuccess().contains("/"+ (Calendar.getInstance().get(Calendar.MONTH)+1)+"/")){
                         totalMonth +=request.getTotal();
+                        if (request.getDateSuccess().substring(0,2).equals(Calendar.getInstance().get(Calendar.DAY_OF_MONTH)+"")){
+                            totalToday += request.getTotal();
+                        }
                     }
 
                     if (request.getStatus() == 2){
@@ -80,6 +84,7 @@ public class StatisticFragment extends Fragment {
                 total_order.setText(String.valueOf(totalOder));
                 total_orderCancel.setText(String.valueOf(totalOrder_Cancel));
                 total_month.setText(decimalFormat.format(totalMonth)+"đ");
+                total_today.setText(decimalFormat.format(totalToday));
             }
 
             @Override

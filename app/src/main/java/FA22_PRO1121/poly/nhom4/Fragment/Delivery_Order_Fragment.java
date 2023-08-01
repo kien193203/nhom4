@@ -43,7 +43,6 @@ public class Delivery_Order_Fragment extends Fragment {
     FirebaseRecyclerOptions<Request> options;
     FirebaseRecyclerAdapter<Request, ViewHolder_Order> adapter;
     DecimalFormat decimalFormat = new DecimalFormat("###,###,###");
-    SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -100,55 +99,5 @@ public class Delivery_Order_Fragment extends Fragment {
         recyclerView_Oder_Delivery.setAdapter(adapter);
 
         return root;
-    }
-
-    @Override
-    public boolean onContextItemSelected(@NonNull MenuItem item) {
-        if (item.getTitle().equals("Cập nhật")) {
-            showUpdateDialog(adapter.getRef(item.getOrder()).getKey(), adapter.getItem(item.getOrder()));
-        }
-        return super.onContextItemSelected(item);
-    }
-
-    private void showUpdateDialog(String key, Request item) {
-        final AlertDialog.Builder aldialog = new AlertDialog.Builder(getActivity());
-        aldialog.setTitle("Cập nhật đơn hàng");
-        aldialog.setMessage("Vui lòng chọn trạng thái");
-        List<String> status = new ArrayList<>();
-        status.add("Xác nhận");
-        status.add("Đã hủy");
-        status.add("Đang giao");
-        status.add("Thành công");
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_spinner_dropdown_item, status);
-
-        LayoutInflater inflater = getLayoutInflater();
-        View view = inflater.inflate(R.layout.update_order_layout, null);
-        Spinner spinner = view.findViewById(R.id.statusSpinner);
-        spinner.setAdapter(adapter);
-        aldialog.setView(view);
-
-        aldialog.setPositiveButton("OK", (dialog, which) -> {
-            Calendar calendar = Calendar.getInstance();
-            dialog.dismiss();
-            item.setStatus(spinner.getSelectedItemPosition()+1);
-            switch (spinner.getSelectedItemPosition()){
-                case 0:
-                    item.setDateConfirm(simpleDateFormat.format(calendar.getTime()));
-                    break;
-                case 1:
-                    item.setDateCanceled(simpleDateFormat.format(calendar.getTime()));
-                    break;
-                case 2:
-                    item.setDateDelivery(simpleDateFormat.format(calendar.getTime()));
-                    break;
-                case 3:
-                    item.setDateSuccess(simpleDateFormat.format(calendar.getTime()));
-                    break;
-            }
-            item.setPhone_status(item.getPhone() + "_" + (spinner.getSelectedItemPosition()+1));
-            reference.child(key).setValue(item);
-        });
-        aldialog.setNegativeButton("Cancel", (dialog, which) -> dialog.dismiss());
-        aldialog.show();
     }
 }

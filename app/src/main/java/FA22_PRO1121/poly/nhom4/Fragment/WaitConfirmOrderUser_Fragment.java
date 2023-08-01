@@ -1,5 +1,6 @@
 package FA22_PRO1121.poly.nhom4.Fragment;
 
+import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
 
@@ -11,14 +12,22 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.Toast;
 
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
+import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.squareup.picasso.Picasso;
 
 import java.text.DecimalFormat;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.HashMap;
+import java.util.Map;
 
 import FA22_PRO1121.poly.nhom4.Model.Request;
 import FA22_PRO1121.poly.nhom4.OrderUserInformationActivity;
@@ -30,14 +39,19 @@ public class WaitConfirmOrderUser_Fragment extends Fragment {
 
     RecyclerView recyclerView_wait_confirm_order_user;
     Query requestReference;
+    DatabaseReference reference;
+
     FirebaseRecyclerOptions<Request> options;
     FirebaseRecyclerAdapter<Request, ViewHolder_Order_User> adapter;
     DecimalFormat decimalFormat = new DecimalFormat("###,###,###");
+    SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View root = inflater.inflate(R.layout.fragment_wait_confirm_order_user_, container, false);
+        reference = FirebaseDatabase.getInstance().getReference("Request");
         requestReference = FirebaseDatabase.getInstance().getReference("Request").orderByChild("phone_status").equalTo(Common.currentUser.getPhone()+"_"+0);
         recyclerView_wait_confirm_order_user = root.findViewById(R.id.recyclerView_wait_confirm_order_user);
         recyclerView_wait_confirm_order_user.setHasFixedSize(true);
@@ -70,6 +84,35 @@ public class WaitConfirmOrderUser_Fragment extends Fragment {
                     i.putExtra("bundle",bundle);
                     startActivity(i);
                 });
+
+                holder.btnCancel_Order.setOnClickListener(v -> {
+                    Dialog dialog = new Dialog(getActivity());
+                    dialog.setContentView(R.layout.dialog_cancel_reason);
+                    dialog.show();
+                    EditText reason = dialog.findViewById(R.id.reason);
+                    Button cancel = dialog.findViewById(R.id.btnCancel);
+                    Button confirm = dialog.findViewById(R.id.btnOk);
+                    cancel.setOnClickListener(v1 -> dialog.dismiss());
+                    confirm.setOnClickListener(v12 -> {
+                        if (reason.getText().toString().trim().isEmpty()) {
+                            Toast.makeText(getActivity(), "Vui lòng nhập lý do hủy", Toast.LENGTH_SHORT).show();
+                        } else {
+                            Calendar calendar = Calendar.getInstance();
+                            Map<String, Object> map = new HashMap<>();
+                            map.put("dateCanceled", simpleDateFormat.format(calendar.getTime()));
+                            map.put("status", 2);
+                            map.put("phone_status", model.getPhone() + "_" + 2);
+                            map.put("cancellation_reason",reason.getText().toString());
+
+                            reference.child(adapter.getRef(holder.getAbsoluteAdapterPosition()).getKey()).updateChildren(map)
+                                    .addOnSuccessListener(unused -> Toast.makeText(getActivity(), "Bạn đã hủy đơn hàng thành công", Toast.LENGTH_SHORT).show())
+                                    .addOnFailureListener(e -> Toast.makeText(getActivity(), e.getMessage(), Toast.LENGTH_SHORT).show());
+                            dialog.dismiss();
+                            adapter.onDataChanged();
+                        }
+                    });
+                });
+
             }
 
             @NonNull

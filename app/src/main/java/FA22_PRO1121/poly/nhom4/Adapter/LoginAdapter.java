@@ -1,12 +1,12 @@
-package FA22_PRO1121.poly.nhom4;
-
-import android.content.Context;
+package FA22_PRO1121.poly.nhom4.Adapter;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
-import androidx.fragment.app.FragmentManager;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
+
+import FA22_PRO1121.poly.nhom4.Fragment.LoginTabFragment;
+import FA22_PRO1121.poly.nhom4.Fragment.SignUpTabFragment;
 
 public class LoginAdapter extends FragmentStateAdapter {
 
